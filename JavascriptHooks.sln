@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "JavascriptHooks", "JavascriptHooks\", "{24DC0072-CD71-457C-AAB1-4D7BD458631D}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.7.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_49348"
+		Debug.AspNetCompiler.PhysicalPath = "JavascriptHooks\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49348\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_49348"
+		Release.AspNetCompiler.PhysicalPath = "JavascriptHooks\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49348\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "49348"
+		SlnRelativePath = "JavascriptHooks\"
+		DefaultWebSiteLanguage = "Visual Basic"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24DC0072-CD71-457C-AAB1-4D7BD458631D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24DC0072-CD71-457C-AAB1-4D7BD458631D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB7AF694-5F74-42C1-AF89-88F32A5BE739}
+	EndGlobalSection
+EndGlobal
