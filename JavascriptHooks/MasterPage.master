@@ -6,6 +6,9 @@
 <head runat="server">
 	<title>Web Forms Hooks for Javascript</title>
 	<script src="/lib/jquery/jquery.min.js"></script>
+	<style>
+		.ran {color: green;}
+	</style>
 	<asp:ContentPlaceHolder ID="Head" runat="server" />
 </head>
 <body>
@@ -20,30 +23,54 @@
 					<li id="document-ready">document.ready<span/></li>
 					<li id="page-load">pageLoad<span/></li>
 					<li id="request-manager-end">Sys.WebForms.PageRequestManager.getInstance().add_endRequest<span/></li>
-					<li id="request-maanger-loaded">Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded<span/></li>
+					<li id="request-manager-loaded">Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded<span/></li>
 					<li id="application-init">Sys.Application.add_init<span/></li>
 					<li id="application-load"><span/>Sys.Application.add_load<span/></li>
-					<li><span/></li>
-					<asp:UpdatePanel runat="server">
-						<ContentTemplate>
-							<asp:LinkButton runat="server" ID="PanelAction">Update Panel Action</asp:LinkButton>
-						</ContentTemplate>
-					</asp:UpdatePanel>
-					<asp:LinkButton runat="server" ID="SubmitButton">Button outside Upadte Panel</asp:LinkButton>
 				</ul>
+				<div id="prm-steps">
+					<h2>Page Request Manager Events</h2>
+					<ul></ul>
+				</div>
+				<asp:UpdatePanel runat="server">
+					<ContentTemplate>
+						<asp:LinkButton runat="server" ID="PanelAction">Update Panel Action</asp:LinkButton>
+					</ContentTemplate>
+				</asp:UpdatePanel>
+				<asp:LinkButton runat="server" ID="SubmitButton">Button outside Update Panel</asp:LinkButton>
 			</div>
 		</div>
 	</form>
 	<script>
 		var prm = Sys.WebForms.PageRequestManager.getInstance();
 		prm.add_pageLoaded(PageLoadedEH);
+
+		prm.add_initializeRequest(InitEH);
+		prm.add_beginRequest(BeginRequestEH);
+		prm.add_pageLoading(PageLoadingEH);
+		//prm.add_pageLoaded(PageLoaded);
+
+		function InitEH() {
+			$("#prm-steps ul").html("<li>Init</li>");
+		}
+
+		function BeginRequestEH() {
+			$("#prm-steps ul").append("<li>Begin Request</li>");
+		}
+
+		function PageLoadingEH() {
+			$("#prm-steps ul").append("<li>Page Loading</li>");
+		}
 		function PageLoadedEH() {
-			$("#reuest-manager-loaded").addClass("ran");
+			$("#request-manager-loaded").addClass("ran");
+			$("#prm-steps ul").append("<li>Page Loaded</li>");
 		}
-		prm.add_endRequest(PageEndRequestEH)
+
+		prm.add_endRequest(PageEndRequestEH);
 		function PageEndRequestEH() {
-			$("#reuest-manager-end").addClass("ran");
+			$("#request-manager-end").addClass("ran");
+			$("#prm-steps ul").append("<li>End Request</li>");
 		}
+
 		function pageLoad() {
 			$("#page-load").addClass("ran");
 		}
