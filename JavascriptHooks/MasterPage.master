@@ -42,19 +42,17 @@
 	</form>
 	<script>
 		var prm = Sys.WebForms.PageRequestManager.getInstance();
-		prm.add_pageLoaded(PageLoadedEH);
 
+		prm.add_endRequest(PageEndRequestEH);
+		prm.add_pageLoaded(PageLoadedEH);
 		prm.add_initializeRequest(InitEH);
 		prm.add_beginRequest(BeginRequestEH);
 		prm.add_pageLoading(PageLoadingEH);
-		//prm.add_pageLoaded(PageLoaded);
 
-		function InitEH() {
-			$("#prm-steps ul").html("<li>Init</li>");
-		}
-
-		function BeginRequestEH() {
-			$("#prm-steps ul").append("<li>Begin Request</li>");
+		
+		function PageEndRequestEH() {
+			$("#request-manager-end").addClass("ran");
+			$("#prm-steps ul").append("<li>End Request</li>");
 		}
 
 		function PageLoadingEH() {
@@ -65,10 +63,12 @@
 			$("#prm-steps ul").append("<li>Page Loaded</li>");
 		}
 
-		prm.add_endRequest(PageEndRequestEH);
-		function PageEndRequestEH() {
-			$("#request-manager-end").addClass("ran");
-			$("#prm-steps ul").append("<li>End Request</li>");
+		function BeginRequestEH() {
+			$("#prm-steps ul").append("<li>Begin Request</li>");
+		}
+
+		function InitEH() {
+			$("#prm-steps ul").html("<li>Init</li>");
 		}
 
 		function pageLoad() {
