@@ -31,6 +31,10 @@
 					<h2>Page Request Manager Events</h2>
 					<ul></ul>
 				</div>
+				<div id="document-ready-refreshed">
+					<h2>Document Ready test on Update Panel</h2>
+					<ul></ul>
+				</div>
 				<asp:UpdatePanel runat="server">
 					<ContentTemplate>
 						<asp:LinkButton runat="server" ID="PanelAction">Update Panel Action</asp:LinkButton>
@@ -41,18 +45,30 @@
 		</div>
 	</form>
 	<script>
+
+		$(document).ready(function () {
+			documentReadyHook();
+		});
+
+		function documentReadyHook() {
+			$("#document-ready").addClass("ran");
+			$("#document-ready-refreshed ul").append("<li>$(document).ready(...)</li>")
+		}
+
+		function pageLoad() {
+			$("#page-load").addClass("ran");
+		}
+
 		var prm = Sys.WebForms.PageRequestManager.getInstance();
 
+		prm.add_beginRequest(BeginRequestEH);
 		prm.add_endRequest(PageEndRequestEH);
+		prm.add_pageLoading(PageLoadingEH);
 		prm.add_pageLoaded(PageLoadedEH);
 		prm.add_initializeRequest(InitEH);
-		prm.add_beginRequest(BeginRequestEH);
-		prm.add_pageLoading(PageLoadingEH);
 
-		
-		function PageEndRequestEH() {
-			$("#request-manager-end").addClass("ran");
-			$("#prm-steps ul").append("<li>End Request</li>");
+		function BeginRequestEH() {
+			$("#prm-steps ul").append("<li>Begin Request</li>");
 		}
 
 		function PageLoadingEH() {
@@ -63,26 +79,23 @@
 			$("#prm-steps ul").append("<li>Page Loaded</li>");
 		}
 
-		function BeginRequestEH() {
-			$("#prm-steps ul").append("<li>Begin Request</li>");
+		function PageEndRequestEH() {
+			$("#request-manager-end").addClass("ran");
+			$("#prm-steps ul").append("<li>End Request</li>");
 		}
 
 		function InitEH() {
 			$("#prm-steps ul").html("<li>Init</li>");
 		}
 
-		function pageLoad() {
-			$("#page-load").addClass("ran");
+		Sys.Application.add_init(sysAppInitEH);
+		function sysAppInitEH() {
+			$("#application-init").addClass("ran");
 		}
 
 		Sys.Application.add_load(sysAppLoadEH);
 		function sysAppLoadEH() {
 			$("#application-load").addClass("ran");
-		}
-
-		Sys.Application.add_init(sysAppInitEH);
-		function sysAppInitEH() {
-			$("#application-init").addClass("ran");
 		}
 
 	</script>
