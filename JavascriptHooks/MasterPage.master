@@ -32,11 +32,33 @@
 					<ul></ul>
 				</div>
 				<div id="document-ready-refreshed">
-					<h2>Document Ready test on Update Panel</h2>
-					<ul></ul>
+					<h2>Document Ready test outside Update Panel</h2>
+					<ul><li>$(document).ready(...)<span> New.</span></li></ul>
 				</div>
 				<asp:UpdatePanel runat="server">
 					<ContentTemplate>
+						<div id="inside-update-panel">
+							<h2>Events inside Update Panel</h2>
+							Content inside the Update Panel. Should change on events.
+							<h3>Page Request Manager Events</h3>
+							<ul>
+								<li id="prm-initialize-update-panel">add_initializeRequest <span>New.</span></li>	
+								<li id="prm-begin-update-panel">add_beginRequest <span>New.</span></li>
+								<li id="prm-loading-update-panel">add_pageLoading <span>New.</span></li>
+								<li id="prm-loaded-update-panel">add_pageLoaded <span>New.</span></li>
+								<li id="prm-end-update-panel">add_initializeRequest <span>New.</span></li>
+							</ul>
+							<h3>Sys.Application Events</h3>
+							<ul>
+								<li id="sys-add-load-update-panel">add_load <span>New.</span></li>
+								<li id="sys-add-init-update-panel">add_init <span>New.</span></li>
+							</ul>
+							<h3>Jquery Events</h3>
+							<ul>
+								<li id="page-load-update-panel">pageLoad <span>New.</span></li>
+								<li id="document-ready-update-panel">document.ready() <span>New.</span></li>
+							</ul>
+						</div>
 						<asp:LinkButton runat="server" ID="PanelAction">Update Panel Action</asp:LinkButton>
 					</ContentTemplate>
 				</asp:UpdatePanel>
@@ -52,11 +74,15 @@
 
 		function documentReadyHook() {
 			$("#document-ready").addClass("ran");
-			$("#document-ready-refreshed ul").append("<li>$(document).ready(...)</li>")
+			$("#document-ready-refreshed ul span").append(" Updated");
+			$("#document-ready-update-panel span").append(" Updated");
+			console.log($("#document-ready-update-panel span").html());
 		}
 
 		function pageLoad() {
 			$("#page-load").addClass("ran");
+			$("#page-load-update-panel span").append(" Updated");
+			console.log($("#page-load-update-panel span").html());
 		}
 
 		var prm = Sys.WebForms.PageRequestManager.getInstance();
@@ -69,33 +95,42 @@
 
 		function BeginRequestEH() {
 			$("#prm-steps ul").append("<li>Begin Request</li>");
+			$("#prm-begin-update-panel span").append(" Updated");
 		}
 
 		function PageLoadingEH() {
 			$("#prm-steps ul").append("<li>Page Loading</li>");
+			$("#prm-loading-update-panel span").append(" Updated");
 		}
 		function PageLoadedEH() {
 			$("#request-manager-loaded").addClass("ran");
 			$("#prm-steps ul").append("<li>Page Loaded</li>");
+			$("#prm-loaded-update-panel span").append(" Updated");
 		}
 
 		function PageEndRequestEH() {
 			$("#request-manager-end").addClass("ran");
 			$("#prm-steps ul").append("<li>End Request</li>");
+			$("#prm-end-update-panel span").append(" Updated");
 		}
 
 		function InitEH() {
 			$("#prm-steps ul").html("<li>Init</li>");
+			$("#prm-initialize-update-panel span").append(" Updated");
 		}
 
 		Sys.Application.add_init(sysAppInitEH);
 		function sysAppInitEH() {
 			$("#application-init").addClass("ran");
+			$("#sys-add-init-update-panel span").append(" Updated");
+			console.log($("#sys-add-init-update-panel span").html());
 		}
 
 		Sys.Application.add_load(sysAppLoadEH);
 		function sysAppLoadEH() {
 			$("#application-load").addClass("ran");
+			$("#sys-add-load-update-panel span").append(" Updated");
+			console.log($("#sys-add-load-update-panel span").html());
 		}
 
 	</script>
